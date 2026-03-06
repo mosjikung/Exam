@@ -1,0 +1,35 @@
+# ── Go ─────────────────────────────────────────────────────
+backend/server
+backend/*.exe
+backend/*.out
+backend/*.test
+backend/tmp/
+
+# ── Angular ─────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# ── Environment / Secrets ───────────────────────────────────
+.env
+*.env
+.env.local
+.env.production
+
+# ── Docker ──────────────────────────────────────────────────
+.docker/
+
+# ── Database ────────────────────────────────────────────────
+*.db
+*.sqlite
+
+# ── OS ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo

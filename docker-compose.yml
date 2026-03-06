@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+
+  # ── PostgreSQL 16 ───────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: it06_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     it06user
+      POSTGRES_PASSWORD: it06pass
+      POSTGRES_DB:       it06db
+      TZ:                Asia/Bangkok
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U it06user -d it06db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── pgAdmin 4 ────────────────────────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: it06_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL:    admin@it06.com
+      PGADMIN_DEFAULT_PASSWORD: admin1234
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── Go Fiber v2 Backend ─────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: it06_backend
+    restart: unless-stopped
+    environment:
+      APP_NAME:    "IT 06-1 Product API"
+      APP_ENV:     production
+      PORT:        3000
+      DB_HOST:     postgres
+      DB_PORT:     5432
+      DB_USER:     it06user
+      DB_PASSWORD: it06pass
+      DB_NAME:     it06db
+      DB_SSLMODE:  disable
+      DB_TIMEZONE: Asia/Bangkok
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── Angular + nginx Frontend ────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: it06_frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  pg_data:
+    driver: local

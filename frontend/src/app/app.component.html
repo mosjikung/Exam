@@ -1,0 +1,62 @@
+<div class="page-wrapper">
+  <div class="card">
+    <!-- Header -->
+    <div class="card-header">
+      <span>IT 06-1</span>
+    </div>
+
+    <!-- Input Row -->
+    <div class="input-row">
+      <label class="input-label">รหัสสินค้า</label>
+      <input
+        class="code-input"
+        type="text"
+        placeholder="XXXX-XXXX-XXXX-XXXX"
+        [(ngModel)]="productCode"
+        (input)="onInputChange()"
+        maxlength="19"
+      />
+      <button class="btn-add" (click)="addProduct()" [disabled]="loading">
+        ADD
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <!-- Table -->
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>รหัสสินค้า (16 หลัก)</th>
+          <th>บาร์โค้ดสินค้า</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of products">
+          <td class="col-id">{{ p.id }}</td>
+          <td class="col-code">{{ p.product_code }}</td>
+          <td class="col-barcode">
+            <app-barcode [value]="p.product_code"></app-barcode>
+          </td>
+          <td class="col-action">
+            <button class="btn-delete" (click)="confirmDelete(p)">ลบ</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Confirm Dialog Overlay -->
+  <div class="overlay" *ngIf="showConfirm">
+    <div class="confirm-box">
+      <p>ต้องการลบข้อมูล รหัสสินค้า {{ pendingDeleteCode }} หรือไม่ ?</p>
+      <div class="confirm-buttons">
+        <button class="btn-confirm-ok" (click)="executeDelete()">ตกลง</button>
+        <button class="btn-confirm-cancel" (click)="cancelDelete()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sarabun', 'Segoe UI', sans-serif;
+  background: #d0d0d0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5px 5px;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  width: 70vw;
+}
+
+.card {
+  background: #f0f0f0;
+  border: 1px solid #999;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.card-header {
+  background: #3cc953;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 14px;
+  border-bottom: 1px solid #2db344;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px;
+  background: #e8e8e8;
+  border-bottom: 1px solid #ccc;
+
+  .input-label {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #333;
+  }
+
+  .code-input {
+    flex: 1;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    font-size: 18px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 3px;
+    background: white;
+    &:focus { outline: none; border-color: #5bc0de; box-shadow: 0 0 3px rgba(91,192,222,0.5); }
+  }
+
+  .btn-add {
+    background: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 0 36px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 46px;
+    &:hover { background: #46b8da; }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+}
+
+.error-msg {
+  color: #c0392b;
+  font-size: 15px;
+  padding: 6px 28px 10px;
+  background: #e8e8e8;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+
+  thead tr {
+    background: #5bc0de;
+    color: white;
+  }
+
+  th {
+    padding: 14px 18px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #46b8da;
+    font-size: 16px;
+  }
+
+  td {
+    padding: 12px 18px;
+    border: 1px solid #ccc;
+    background: white;
+    text-align: center;
+  }
+
+  tbody tr:nth-child(even) td { background: #f9f9f9; }
+  tbody tr:hover td { background: #eaf6fb; }
+
+  .col-id      { width: 70px; }
+  .col-code    { font-family: 'Courier New', monospace; letter-spacing: 2px; width: 260px; font-size: 16px; }
+  .col-barcode { }
+  .col-action  { width: 110px; }
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 24px;
+  font-size: 15px;
+  cursor: pointer;
+  &:hover { background: #c0392b; }
+}
+
+/* Confirm Dialog */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirm-box {
+  background: white;
+  border-radius: 4px;
+  padding: 44px 60px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  max-width: 520px;
+  width: 90%;
+  text-align: center;
+
+  p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .confirm-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+
+    .btn-confirm-ok {
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 12px 40px;
+      font-size: 17px;
+      cursor: pointer;
+      &:hover { background: #46b8da; }
+    }
+
+    .btn-confirm-cancel {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 12px 40px;
+      font-size: 17px;
+      cursor: pointer;
+      &:hover { background: #c0392b; }
+    }
+  }
+}
